@@ -22,6 +22,7 @@
       :columns="gridColumns"
       :meta="gridMeta"
       :filter-key="filterTest"
+      :filter-columns-key="filterTarget"
       :skip-passed="skipPassed">
     </ci-grid>
   </div>

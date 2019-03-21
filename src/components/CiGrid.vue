@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>Test \ Target</th>
-        <th v-for="key in columns"
+        <th v-for="key in filteredColumns"
           @click="sortBy(key)"
           :class="{ active: sortKey == key }">
           {{ key.replace("/", " ") }}
@@ -13,7 +13,7 @@
       </tr>
       <tr>
         <th>Last update</th>
-        <th v-for="key in columns"
+        <th v-for="key in filteredColumns"
           v-if="key != 'name'">
           {{ meta[key].timestamp | humanTime }}
           <a class="ext-link" v-if="meta[key].ci" :href="meta[key].ci.url">Job</a>
@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <th>Rating</th>
-        <th v-for="key in columns"
+        <th v-for="key in filteredColumns"
           v-if="key != 'name'">
           {{ passRating[key] }}%
         </th>
@@ -32,7 +32,7 @@
       <tr v-for="entry in filteredData">
         <td>{{ entry.name }}</td>
         <ci-cell
-          v-for="key in columns"
+          v-for="key in filteredColumns"
           v-if="key != 'name'"
           :data="entry[key] || {}">
         </ci-cell>
@@ -54,6 +54,7 @@ export default {
     columns: Array,
     meta: Object,
     filterKey: String,
+    filterColumnsKey: String,
     skipPassed: Boolean
   },
   data: function () {
@@ -80,7 +81,7 @@ export default {
                 })
             }
             if (this.skipPassed) {
-                var columns = this.columns
+                var columns = this.filteredColumns
                 data = data.filter(function (row) {
                     return !(columns.every(function(key) {
                         return key == 'name' || (row[key] && row[key].status === 'passed');
@@ -95,6 +96,14 @@ export default {
                 })
             }
             return data
+    },
+    filteredColumns: function() {
+      if (this.filterColumnsKey && this.filterColumnsKey != '') {
+        var key = this.filterColumnsKey.toLowerCase();
+        return this.columns.filter((x) => x.toLowerCase().indexOf(key) > -1);
+      } else {
+        return this.columns;
+      }
     },
     passRating: function () {
       var r = {};
