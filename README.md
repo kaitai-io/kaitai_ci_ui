@@ -1,6 +1,6 @@
 # Kaitai Continuous Integration (CI) User Interface (UI)
 
-This project is a single-page webapp that runs at http://kaitai.io/ci/
+This project is a single-page webapp that runs at https://ci.kaitai.io/
 and provides simple user interface to assess the status of continuous
 integration pipeline of [Kaitai Struct project](http://kaitai.io/) and
 identify problems.
