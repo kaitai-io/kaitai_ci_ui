@@ -1,0 +1,9 @@
+dist: xenial
+sudo: false
+language: node_js
+cache: npm
+
+script: npm run build
+deploy:
+  provider: script
+  script: ./publish
