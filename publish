@@ -109,7 +109,7 @@ else
 fi
 
 echo 'Updating the files...'
-"$RSYNC_BIN" --delete-after -c --exclude=.git --exclude=CNAME --exclude=.nojekyll -r -v -n dist "$GH_REPO_NAME"
+"$RSYNC_BIN" --delete-after -c --exclude=.git --exclude=CNAME --exclude=.nojekyll -r -v dist/ "$GH_REPO_NAME"
 
 echo 'Adding and committing...'
 cd "$GH_REPO_NAME"
