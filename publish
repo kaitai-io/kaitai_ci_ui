@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 GH_USER=kaitai-io
-GH_REPO_NAME=ci-kaitai-io.github.io.git
+GH_REPO_NAME=ci-kaitai-io.github.io
 GH_REPO_BRANCH=master
 
 export GIT_AUTHOR_NAME='Kaitai Bot'
