@@ -13,8 +13,7 @@
       </tr>
       <tr>
         <th>Last update</th>
-        <th v-for="key in filteredColumns"
-          v-if="key != 'name'">
+        <th v-for="key in filteredColumns">
           {{ meta[key].timestamp | humanTime }}
           <a class="ext-link" v-if="meta[key].ci" :href="meta[key].ci.url">Job</a>
           <a class="ext-link" :href="meta[key].artifactsUrl">Artifacts</a>
@@ -22,18 +21,17 @@
       </tr>
       <tr>
         <th>Rating</th>
-        <th v-for="key in filteredColumns"
-          v-if="key != 'name'">
+        <th v-for="key in filteredColumns">
           {{ passRating[key] }}%
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entry in filteredData">
+      <tr v-for="entry in filteredData" :key="entry.name">
         <td>{{ entry.name }}</td>
         <ci-cell
           v-for="key in filteredColumns"
-          v-if="key != 'name'"
+          :key="entry.name + '/' + key"
           :data="entry[key] || {}">
         </ci-cell>
       </tr>
