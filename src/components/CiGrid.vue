@@ -61,7 +61,7 @@ export default {
       sortOrders[key] = 1
     })
     return {
-      sortKey: '',
+      sortKey: 'name',
       sortOrders: sortOrders,
     }
   },
