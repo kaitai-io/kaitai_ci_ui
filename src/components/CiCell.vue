@@ -1,5 +1,15 @@
 <template>
-  <td v-bind:class="classObject">{{ data.status || "unknown" }}</td>
+  <td v-bind:class="cssClassObject" @click="details = !details">
+    {{ data.status || "unknown" }}
+    <div class="add-info" v-if="details && data.failure">
+      <p>
+        Message: {{data.failure.message}}
+      </p>
+      <pre v-if="data.failure.trace">
+        {{data.failure.trace.join("\n")}}
+      </pre>
+    </div>
+  </td>
 </template>
 
 <script>
@@ -8,8 +18,11 @@ export default {
   props: {
     data: Object,
   },
+  data: function() {
+    return {"details": false};
+  },
   computed: {
-    classObject: function() {
+    cssClassObject: function() {
       return {
         "passed": this.data.status == 'passed',
         "failed": this.data.status == 'failed',
@@ -17,7 +30,7 @@ export default {
         "no-spec": this.data.status === undefined,
       };
     }
-  }
+  },
 }
 </script>
 
@@ -45,7 +58,6 @@ export default {
         }
         .add-info {
             position: absolute;
-            display: none;
             background: #F0F0F0;
             border: 1px solid #A0A0A0;
         }
