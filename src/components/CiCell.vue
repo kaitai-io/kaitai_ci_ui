@@ -24,7 +24,8 @@ export default {
   computed: {
     cssClassObject: function() {
       return {
-        "passed": this.data.status == 'passed',
+        "passed-kst": this.data.status == 'passed' && this.data.is_kst,
+        "passed": this.data.status == 'passed' && !this.data.is_kst,
         "failed": this.data.status == 'failed',
         "leak": this.data.status == 'leak',
         "no-spec": this.data.status === undefined,
@@ -37,6 +38,9 @@ export default {
 <style scoped>
         .passed {
             background: #dff0d8;
+        }
+        .passed-kst {
+            background: #82dc75;
         }
         .skipped {
             background: #b9cfbb;
