@@ -36,6 +36,14 @@
         </ci-cell>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <th>KST adoption</th>
+        <th v-for="key in filteredColumns" :key="key">
+          {{ kstRating[key] }}%
+        </th>
+      </tr>
+    </tfoot>
   </table>
 </template>
 
@@ -109,7 +117,14 @@ export default {
         r[pair] = Math.round(this.meta[pair].passed / this.data.length * 100 * 10.0) / 10.0;
       }
       return r;
-    }
+    },
+    kstRating: function () {
+      var r = {};
+      for (var pair in this.meta) {
+        r[pair] = Math.round(this.meta[pair].kst / this.data.length * 100 * 10.0) / 10.0;
+      }
+      return r;
+    },
   },
   filters: {
     capitalize: function (str) {

@@ -90,13 +90,16 @@ export default {
 
         // Aggregation
         var numPassed = 0;
+        var numKst = 0;
         for (var testName in json) {
-          this.testData[testName] = this.testData[testName] || {"name": testName};
+          var row = this.testData[testName] || {"name": testName}
           delete json[testName]["name"];
-          this.testData[testName][pair] = json[testName];
-          if (this.testData[testName][pair].status === 'passed') {
+          row[pair] = json[testName];
+          if (row[pair].status === 'passed')
             numPassed++;
-          }
+          if (row[pair].is_kst)
+            numKst++;
+          this.testData[testName] = row;
         }
 
         // Generate output
@@ -108,6 +111,7 @@ export default {
         }
 
         meta.passed = numPassed;
+        meta.kst = numKst;
         meta.timestamp = new Date(meta.timestamp);
         meta.artifactsUrl = "https://github.com/kaitai-io/ci_artifacts/tree/" + pair + "/test_out/" + lang;
         this.gridMeta[pair] = meta;
