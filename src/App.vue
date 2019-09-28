@@ -66,7 +66,7 @@ export default {
       ["javascript", "nodejs4"],
       ["javascript", "nodejs7"],
       ["lua", "5.3"],
-			["nim", "1.0.0"],
+      ["nim", "1.0.0"],
       ["perl", "5.24"],
       ["php", "7.1"],
       ["python", "2.7"],
