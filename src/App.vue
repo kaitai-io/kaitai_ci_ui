@@ -70,7 +70,8 @@ export default {
       ["perl", "5.24"],
       ["php", "7.1"],
       ["python", "2.7"],
-      ["python", "3.6"],
+      ["python", "3.4"],
+      ["python", "3.8"],
       ["ruby", "1.9"],
       ["ruby", "2.3"],
     ];
