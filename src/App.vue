@@ -63,6 +63,7 @@ export default {
       ["go", "1.10"],
       ["java", "openjdk7"],
       ["java", "oraclejdk8"],
+      ["java", "openjdk11"],
       ["javascript", "nodejs4"],
       ["javascript", "nodejs7"],
       ["lua", "5.3"],
