@@ -96,7 +96,7 @@ export default {
         // Aggregation
         var numPassed = 0;
         var numKst = 0;
-        for (var testName in json) {
+        for (const testName in json) {
           var row = this.testData[testName] || {"name": testName}
           delete json[testName]["name"];
           row[pair] = json[testName];
@@ -111,7 +111,7 @@ export default {
         this.gridColumns.push(pair);
         this.gridColumns = this.gridColumns.sort();
         this.gridData = [];
-        for (var testName in this.testData) {
+        for (const testName in this.testData) {
           this.gridData.push(this.testData[testName]);
         }
 
