@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>Test \ Target</th>
-        <th v-for="key in filteredColumns"
+        <th v-for="(key, i) in filteredColumns" :key="i"
           @click="sortBy(key)"
           :class="{ active: sortKey == key }">
           {{ key.replace("/", " ") }}
@@ -13,7 +13,7 @@
       </tr>
       <tr>
         <th>Last update</th>
-        <th v-for="key in filteredColumns">
+        <th v-for="(key, i) in filteredColumns" :key="i">
           {{ meta[key].timestamp | humanTime }}
           <a class="ext-link" v-if="meta[key].ci" :href="meta[key].ci.url">Job</a>
           <a class="ext-link" :href="meta[key].artifactsUrl">Artifacts</a>
@@ -21,7 +21,7 @@
       </tr>
       <tr>
         <th>Rating</th>
-        <th v-for="key in filteredColumns">
+        <th v-for="(key, i) in filteredColumns" :key="i">
           {{ passRating[key] }}%
         </th>
       </tr>
