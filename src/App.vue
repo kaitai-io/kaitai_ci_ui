@@ -79,11 +79,11 @@ export default {
       ["ruby", "2.3"],
     ];
     for (var i in pairs) {
-      this.addOneJson(pairs[i][0], pairs[i][1]);
+      this.addOneJson(pairs[i][0], pairs[i][1], pairs);
     }
   },
   methods: {
-    addOneJson: function (lang, version) {
+    addOneJson: function (lang, version, allPairs) {
       var pair = lang + "/" + version;
       console.log("Querying data for", lang, version, pair);
       fetch("https://raw.githubusercontent.com/kaitai-io/ci_artifacts/" + pair + "/test_out/" + lang + "/ci.json").then(r =>
@@ -97,7 +97,7 @@ export default {
         var numPassed = 0;
         var numKst = 0;
         for (const testName in json) {
-          var row = this.testData[testName] || {"name": testName}
+          var row = this.testData[testName] || {"name": testName};
           delete json[testName]["name"];
           row[pair] = json[testName];
           if (row[pair].status === 'passed')
@@ -109,7 +109,25 @@ export default {
 
         // Generate output
         this.gridColumns.push(pair);
-        this.gridColumns = this.gridColumns.sort();
+        this.gridColumns = this.gridColumns.sort((a, b) => {
+          const aParts = a.split("/");
+          const bParts = b.split("/");
+          let aIdx, bIdx;
+          for (let i = 0, len = allPairs.length; i < len; i++) {
+            if (typeof aIdx === "number" && typeof bIdx === "number") {
+              break;
+            }
+            let pair = allPairs[i];
+            if (pair[0] === aParts[0] && pair[1] === aParts[1]) {
+              aIdx = i;
+              continue;
+            }
+            if (pair[0] === bParts[0] && pair[1] === bParts[1]) {
+              bIdx = i;
+            }
+          }
+          return aIdx - bIdx;
+        });
         this.gridData = [];
         for (const testName in this.testData) {
           this.gridData.push(this.testData[testName]);
