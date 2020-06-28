@@ -59,6 +59,8 @@ export default {
       ["cpp_stl_11", "msvc141_windows_x64"],
       ["csharp", "mono5.18.0"],
       ["csharp", "net45_windows"],
+      ["csharp", "netcore2.2.103_linux"],
+      ["csharp", "netcore3.0.100_linux"],
       ["graphviz", "2.36"],
       ["go", "1.10"],
       ["java", "openjdk7"],
