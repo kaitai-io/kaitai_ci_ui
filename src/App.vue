@@ -70,6 +70,8 @@ export default {
       ["javascript", "nodejs8"],
       ["javascript", "nodejs10"],
       ["javascript", "nodejs12"],
+      ["lua", "5.1"],
+      ["lua", "5.2"],
       ["lua", "5.3"],
       ["nim", "1.2.0"],
       ["perl", "5.24"],
