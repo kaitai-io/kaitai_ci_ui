@@ -62,7 +62,7 @@ export default {
       ["csharp", "netcore2.2.103_linux"],
       ["csharp", "netcore3.0.100_linux"],
       ["graphviz", "2.36"],
-      ["go", "1.11"],
+      ["go", "1.13"],
       ["java", "openjdk7"],
       ["java", "oraclejdk8"],
       ["java", "openjdk11"],
