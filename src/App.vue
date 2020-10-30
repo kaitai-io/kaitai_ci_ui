@@ -76,10 +76,10 @@ export default {
       ["php", "7.1"],
       ["python", "2.7"],
       ["python", "3.4"],
-      ["python", "3.8"],
+      ["python", "3.9"],
       ["construct", "python2.7"],
       ["construct", "python3.4"],
-      ["construct", "python3.8"],
+      ["construct", "python3.9"],
       ["ruby", "1.9"],
       ["ruby", "2.3"],
     ];
