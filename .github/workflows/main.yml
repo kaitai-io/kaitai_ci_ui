@@ -21,8 +21,8 @@ jobs:
         env:
           BOT_SSH_KEY: ${{secrets.BOT_SSH_KEY}}
         run: |
-          .github/push_artifacts/git_config_kaitai_bot
-          .github/push_artifacts/publish \
+          ./push_artifacts/git_config_kaitai_bot
+          ./push_artifacts/publish \
             -o kaitai-io \
             -r ci-kaitai-io.github.io \
             -m "Build results of $GITHUB_REF $GITHUB_REPOSITORY@$GITHUB_SHA" \
