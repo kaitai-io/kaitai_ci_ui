@@ -25,5 +25,5 @@ jobs:
           ./push_artifacts/publish \
             -o kaitai-io \
             -r ci-kaitai-io.github.io \
-            -m "Build results of $GITHUB_REF $GITHUB_REPOSITORY@$GITHUB_SHA" \
+            -m "Build results of ${GITHUB_REF#refs/heads/*} $GITHUB_REPOSITORY@$GITHUB_SHA" \
             -- --exclude=.git --exclude=.travis.yml --exclude=CNAME dist/
