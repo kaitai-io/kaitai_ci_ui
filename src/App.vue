@@ -92,7 +92,15 @@ export default {
       var pair = lang + "/" + version;
       console.log("Querying data for", lang, version, pair);
       fetch("https://raw.githubusercontent.com/kaitai-io/ci_artifacts/" + pair + "/test_out/" + lang + "/ci.json").then(r =>
-        r.json()
+        if (r.ok) {
+          return r.json;
+        } else {
+          errorJson =
+            {
+              "$meta": "Build failure"
+            }
+          return errorJson;
+        }
       ).then(json => {
         var meta = json.$meta;
         delete json['$meta'];
