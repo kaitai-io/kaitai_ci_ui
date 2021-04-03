@@ -5,7 +5,7 @@
         <th>Test \ Target</th>
         <th v-for="(key, i) in filteredColumns" :key="i"
             @click="sortBy(key)"
-            :class="{ active: sortKey == key }">
+            :class="{ active: sortKey === key }">
           {{ key.replace("/", " ") }}
           <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
@@ -90,7 +90,7 @@ export default {
         var columns = this.filteredColumns
         data = data.filter(function (row) {
           return !(columns.every(function (key) {
-            return key == 'name' || (row[key] && row[key].status === 'passed');
+            return key === 'name' || (row[key] && row[key].status === 'passed');
           }))
         })
       }
@@ -98,13 +98,13 @@ export default {
         data = data.slice().sort(function (a, b) {
           a = a[sortKey]
           b = b[sortKey]
-          return (a === b ? 0 : a > b ? 1 : -1) * order
+          return (a === b ? 0 : (a > b ? 1 : -1)) * order
         })
       }
       return data
     },
     filteredColumns: function () {
-      if (this.filterColumnsKey && this.filterColumnsKey != '') {
+      if (this.filterColumnsKey && this.filterColumnsKey !== '') {
         var key = this.filterColumnsKey.toLowerCase();
         return this.columns.filter((x) => x.toLowerCase().indexOf(key) > -1);
       } else {

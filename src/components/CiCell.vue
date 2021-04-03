@@ -22,10 +22,10 @@ export default {
   computed: {
     cssClassObject: function () {
       return {
-        "passed-kst": this.data.status == 'passed' && this.data.is_kst,
-        "passed": this.data.status == 'passed' && !this.data.is_kst,
-        "failed": this.data.status == 'failed',
-        "leak": this.data.status == 'leak',
+        "passed-kst": this.data.status === 'passed' && this.data.is_kst,
+        "passed": this.data.status === 'passed' && !this.data.is_kst,
+        "failed": this.data.status === 'failed',
+        "leak": this.data.status === 'leak',
         "no-spec": this.data.status === undefined,
       };
     }
