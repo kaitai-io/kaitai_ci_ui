@@ -10,9 +10,11 @@
         <div class="form-group col-md-4">
           <input name="filterTarget" class="form-control" v-model="filterTarget" placeholder="Search target...">
         </div>
-        <div class="form-check col-md-4">
-          <input type="checkbox" class="form-check-input" v-model="skipPassed" id="only-failures-checkbox">
-          <label class="form-check-label" for="only-failures-checkbox">Only failures</label>
+        <div class="col-md-4 checkbox">
+          <label for="only-failures-checkbox">
+            <input type="checkbox" v-model="skipPassed" id="only-failures-checkbox">
+            Only failures
+          </label>
         </div>
       </div>
     </form>
@@ -27,6 +29,23 @@
     </ci-grid>
   </div>
 </template>
+
+<style>
+.form-row > .col,
+.form-row > [class*="col-"] {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.col-md-4.checkbox {
+  margin: 0;
+  padding-left: 12px;
+}
+.col-md-4.checkbox label {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+</style>
 
 <script>
 import CiGrid from './components/CiGrid.vue'
