@@ -36,9 +36,11 @@
   padding-right: 5px;
   padding-left: 5px;
 }
+
 .form-row .options-column {
   padding-left: 12px;
 }
+
 .col-md-4 label.checkbox-inline {
   padding-top: 6px;
   padding-bottom: 6px;
@@ -46,7 +48,7 @@
 </style>
 
 <script>
-import CiGrid from './components/CiGrid.vue'
+import CiGrid from './components/CiGrid.vue';
 
 export default {
   name: 'app',
@@ -62,7 +64,7 @@ export default {
       gridData: [],
       gridMeta: {},
       skipPassed: false,
-    }
+    };
   },
   created: function () {
     var pairs = [
@@ -163,5 +165,5 @@ export default {
       });
     }
   }
-}
+};
 </script>

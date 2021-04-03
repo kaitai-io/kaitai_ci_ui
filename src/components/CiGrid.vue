@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import CiCell from '@/components/CiCell.vue'
+import CiCell from '@/components/CiCell.vue';
 
 export default {
   name: 'CiGrid',
@@ -64,44 +64,44 @@ export default {
     skipPassed: Boolean
   },
   data: function () {
-    var sortOrders = {}
+    var sortOrders = {};
     this.columns.forEach(function (key) {
-      sortOrders[key] = 1
-    })
+      sortOrders[key] = 1;
+    });
     return {
       sortKey: 'name',
       sortOrders: sortOrders,
-    }
+    };
   },
   computed: {
     filteredData: function () {
-      var sortKey = this.sortKey
-      var filterKey = this.filterKey && this.filterKey.toLowerCase()
-      var order = this.sortOrders[sortKey] || 1
-      var data = this.data
+      var sortKey = this.sortKey;
+      var filterKey = this.filterKey && this.filterKey.toLowerCase();
+      var order = this.sortOrders[sortKey] || 1;
+      var data = this.data;
       if (filterKey) {
         data = data.filter(function (row) {
           return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-          })
-        })
+            return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
+          });
+        });
       }
       if (this.skipPassed) {
-        var columns = this.filteredColumns
+        var columns = this.filteredColumns;
         data = data.filter(function (row) {
           return !(columns.every(function (key) {
             return key === 'name' || (row[key] && row[key].status === 'passed');
-          }))
-        })
+          }));
+        });
       }
       if (sortKey) {
         data = data.slice().sort(function (a, b) {
-          a = a[sortKey]
-          b = b[sortKey]
-          return (a === b ? 0 : (a > b ? 1 : -1)) * order
-        })
+          a = a[sortKey];
+          b = b[sortKey];
+          return (a === b ? 0 : (a > b ? 1 : -1)) * order;
+        });
       }
-      return data
+      return data;
     },
     filteredColumns: function () {
       if (this.filterColumnsKey && this.filterColumnsKey !== '') {
@@ -128,7 +128,7 @@ export default {
   },
   filters: {
     capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
+      return str.charAt(0).toUpperCase() + str.slice(1);
     },
     humanTime: function (d) {
       var sec = (new Date() - d) / 1000;
@@ -145,11 +145,11 @@ export default {
   },
   methods: {
     sortBy: function (key) {
-      this.sortKey = key
-      this.sortOrders[key] = this.sortOrders[key] * -1
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
     }
   }
-}
+};
 </script>
 
 <style scoped>
