@@ -114,7 +114,7 @@ export default {
         r.json()
       ).then(json => {
         var meta = json.$meta;
-        delete json['$meta'];
+        delete json.$meta;
         console.log("Got answer for", pair, ", meta:", meta);
 
         // Aggregation
@@ -144,7 +144,6 @@ export default {
             let pair = allPairs[i];
             if (pair[0] === aParts[0] && pair[1] === aParts[1]) {
               aIdx = i;
-              continue;
             }
             if (pair[0] === bParts[0] && pair[1] === bParts[1]) {
               bIdx = i;
