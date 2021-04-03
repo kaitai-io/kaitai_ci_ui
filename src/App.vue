@@ -4,26 +4,26 @@
 
     <form id="search">
       <div class="form-row">
-         <div class="form-group col-md-4">
-            <input name="filterTest" class="form-control" v-model="filterTest" placeholder="Search test...">
-         </div>
-         <div class="form-group col-md-4">
-            <input name="filterTarget" class="form-control" v-model="filterTarget" placeholder="Search target...">
-         </div>
-         <div class="form-check col-md-4">
-            <input type="checkbox" class="form-check-input" v-model="skipPassed" id="only-failures-checkbox">
-            <label class="form-check-label" for="only-failures-checkbox">Only failures</label>
-         </div>
+        <div class="form-group col-md-4">
+          <input name="filterTest" class="form-control" v-model="filterTest" placeholder="Search test...">
+        </div>
+        <div class="form-group col-md-4">
+          <input name="filterTarget" class="form-control" v-model="filterTarget" placeholder="Search target...">
+        </div>
+        <div class="form-check col-md-4">
+          <input type="checkbox" class="form-check-input" v-model="skipPassed" id="only-failures-checkbox">
+          <label class="form-check-label" for="only-failures-checkbox">Only failures</label>
+        </div>
       </div>
     </form>
 
     <ci-grid
-      :data="gridData"
-      :columns="gridColumns"
-      :meta="gridMeta"
-      :filter-key="filterTest"
-      :filter-columns-key="filterTarget"
-      :skip-passed="skipPassed">
+        :data="gridData"
+        :columns="gridColumns"
+        :meta="gridMeta"
+        :filter-key="filterTest"
+        :filter-columns-key="filterTarget"
+        :skip-passed="skipPassed">
     </ci-grid>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
   components: {
     CiGrid
   },
-  data: function() {
+  data: function () {
     return {
       testData: {},
       filterTest: '',

@@ -4,8 +4,8 @@
       <tr>
         <th>Test \ Target</th>
         <th v-for="(key, i) in filteredColumns" :key="i"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }">
+            @click="sortBy(key)"
+            :class="{ active: sortKey == key }">
           {{ key.replace("/", " ") }}
           <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
@@ -30,9 +30,9 @@
       <tr v-for="entry in filteredData" :key="entry.name">
         <td>{{ entry.name }}</td>
         <ci-cell
-          v-for="key in filteredColumns"
-          :key="entry.name + '/' + key"
-          :data="entry[key] || {}">
+            v-for="key in filteredColumns"
+            :key="entry.name + '/' + key"
+            :data="entry[key] || {}">
         </ci-cell>
       </tr>
     </tbody>
@@ -74,36 +74,36 @@ export default {
     }
   },
   computed: {
-        filteredData: function () {
-            var sortKey = this.sortKey
-            var filterKey = this.filterKey && this.filterKey.toLowerCase()
-            var order = this.sortOrders[sortKey] || 1
-            var data = this.data
-            if (filterKey) {
-                data = data.filter(function (row) {
-                    return Object.keys(row).some(function (key) {
-                        return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-                    })
-                })
-            }
-            if (this.skipPassed) {
-                var columns = this.filteredColumns
-                data = data.filter(function (row) {
-                    return !(columns.every(function(key) {
-                        return key == 'name' || (row[key] && row[key].status === 'passed');
-                    }))
-                })
-            }
-            if (sortKey) {
-                data = data.slice().sort(function (a, b) {
-                    a = a[sortKey]
-                    b = b[sortKey]
-                    return (a === b ? 0 : a > b ? 1 : -1) * order
-                })
-            }
-            return data
+    filteredData: function () {
+      var sortKey = this.sortKey
+      var filterKey = this.filterKey && this.filterKey.toLowerCase()
+      var order = this.sortOrders[sortKey] || 1
+      var data = this.data
+      if (filterKey) {
+        data = data.filter(function (row) {
+          return Object.keys(row).some(function (key) {
+            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+          })
+        })
+      }
+      if (this.skipPassed) {
+        var columns = this.filteredColumns
+        data = data.filter(function (row) {
+          return !(columns.every(function (key) {
+            return key == 'name' || (row[key] && row[key].status === 'passed');
+          }))
+        })
+      }
+      if (sortKey) {
+        data = data.slice().sort(function (a, b) {
+          a = a[sortKey]
+          b = b[sortKey]
+          return (a === b ? 0 : a > b ? 1 : -1) * order
+        })
+      }
+      return data
     },
-    filteredColumns: function() {
+    filteredColumns: function () {
       if (this.filterColumnsKey && this.filterColumnsKey != '') {
         var key = this.filterColumnsKey.toLowerCase();
         return this.columns.filter((x) => x.toLowerCase().indexOf(key) > -1);
