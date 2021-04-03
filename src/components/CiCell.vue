@@ -5,7 +5,7 @@
       <p>
         Message: {{data.failure.message}}
       </p>
-      <pre v-if="data.failure.trace">{{data.failure.trace.join("\n")}}</pre>
+      <pre v-if="data.failure.trace">{{data.failure.trace}}</pre>
     </div>
   </td>
 </template>
