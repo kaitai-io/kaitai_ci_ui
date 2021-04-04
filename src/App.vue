@@ -121,14 +121,16 @@ export default {
         var numPassed = 0;
         var numKst = 0;
         for (const testName in json) {
-          var row = this.testData[testName] || {"name": testName};
+          if (!Object.prototype.hasOwnProperty.call(this.testData, testName)) {
+            this.testData[testName] = {"name": testName};
+          }
+          var row = this.testData[testName];
           delete json[testName]["name"];
           row[pair] = json[testName];
           if (row[pair].status === 'passed')
             numPassed++;
           if (row[pair].is_kst)
             numKst++;
-          this.testData[testName] = row;
         }
 
         // Generate output
