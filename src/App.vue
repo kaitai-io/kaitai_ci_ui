@@ -110,9 +110,14 @@ export default {
     addOneJson: function (lang, version, allPairs) {
       var pair = lang + "/" + version;
       console.log("Querying data for", lang, version, pair);
-      fetch("https://raw.githubusercontent.com/kaitai-io/ci_artifacts/" + pair + "/test_out/" + lang + "/ci.json").then(r =>
-        r.json()
-      ).then(json => {
+      fetch(
+        "https://raw.githubusercontent.com/kaitai-io/ci_artifacts/" + pair + "/test_out/" + lang + "/ci.json"
+      ).then(r => {
+        if (!r.ok) {
+          throw new Error("HTTP error, status code: " + r.status);
+        }
+        return r.json();
+      }).then(json => {
         var meta = json.$meta;
         delete json.$meta;
         console.log("Got answer for", pair, ", meta:", meta);
@@ -163,6 +168,8 @@ export default {
         meta.timestamp = new Date(meta.timestamp);
         meta.artifactsUrl = "https://github.com/kaitai-io/ci_artifacts/tree/" + pair + "/test_out/" + lang;
         this.gridMeta[pair] = meta;
+      }).catch(err => {
+        console.warn("Cannot fetch data for " + pair + ". " + err);
       });
     }
   }
