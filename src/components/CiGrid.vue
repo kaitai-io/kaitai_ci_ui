@@ -80,11 +80,7 @@ export default {
       var order = this.sortOrders[sortKey] || 1;
       var data = this.data;
       if (filterKey) {
-        data = data.filter(function (row) {
-          return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
-          });
-        });
+        data = data.filter(row => this.strContainsCaseInsensitive(String(row.name), filterKey));
       }
       if (this.skipPassed) {
         var columns = this.filteredColumns;
@@ -147,7 +143,8 @@ export default {
     sortBy: function (key) {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
-    }
+    },
+    strContainsCaseInsensitive: (str, lowerSearchStr) => str.toLowerCase().indexOf(lowerSearchStr) > -1,
   }
 };
 </script>
