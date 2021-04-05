@@ -102,9 +102,7 @@ export default {
       ["ruby", "1.9"],
       ["ruby", "2.3"],
     ];
-    for (var i in pairs) {
-      this.addOneJson(pairs[i][0], pairs[i][1], pairs);
-    }
+    pairs.forEach(pair => this.addOneJson(pair[0], pair[1], pairs));
   },
   methods: {
     addOneJson: function (lang, version, allPairs) {
