@@ -107,7 +107,7 @@ export default {
   methods: {
     addOneJson: function (lang, version, allPairs) {
       var pair = lang + "/" + version;
-      console.log("Querying data for", lang, version, pair);
+      console.log("Querying data for", pair);
       fetch(
         "https://raw.githubusercontent.com/kaitai-io/ci_artifacts/" + pair + "/test_out/" + lang + "/ci.json"
       ).then(r => {
@@ -118,7 +118,7 @@ export default {
       }).then(json => {
         var meta = json.$meta;
         delete json.$meta;
-        console.log("Got answer for", pair, ", meta:", meta);
+        console.log("Got answer for " + pair + ", meta:", meta);
 
         // Aggregation
         var numPassed = 0;
