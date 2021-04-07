@@ -15,17 +15,22 @@
             <input type="checkbox" v-model="skipPassed" id="only-failures-checkbox">
             Only failures
           </label>
+          <label class="checkbox-inline" for="group-by-lang">
+            <input type="checkbox" v-model="groupByLang" id="group-by-lang">
+            Group columns by language
+          </label>
         </div>
       </div>
     </form>
 
     <ci-grid
-        :data="gridData"
-        :columns="gridColumns"
-        :meta="gridMeta"
+        :data="groupedGridData"
+        :columns="groupedGridColumns"
+        :meta="groupedGridMeta"
         :filter-key="filterTest"
         :filter-columns-key="filterTarget"
-        :skip-passed="skipPassed">
+        :skip-passed="skipPassed"
+        :group-by-lang="groupByLang">
     </ci-grid>
   </div>
 </template>
@@ -64,6 +69,7 @@ export default {
       gridData: [],
       gridMeta: {},
       skipPassed: false,
+      groupByLang: true,
     };
   },
   created: function () {
@@ -103,6 +109,81 @@ export default {
       ["ruby", "2.3"],
     ];
     pairs.forEach(pair => this.addOneJson(pair[0], pair[1], pairs));
+  },
+  computed: {
+    groupedGridColumns: function () {
+      if (!this.groupByLang) {
+        return this.gridColumns;
+      }
+      return Array.from(
+          new Set(
+              this.gridColumns.map(pair => pair.split('/')[0])
+          )
+      );
+    },
+    groupedGridData: function () {
+      if (!this.groupByLang) {
+        return this.gridData;
+      }
+      return this.gridData.map(testRow => {
+        const newTestRow = {};
+        Object.entries(testRow).forEach(([key, value]) => {
+          if (key === 'name') {
+            newTestRow[key] = value;
+            return;
+          }
+          const lang = key.split('/')[0];
+          if (!Object.prototype.hasOwnProperty.call(newTestRow, lang)) {
+            newTestRow[lang] = {
+              status: value.status,
+              is_kst: value.is_kst,
+            };
+            return;
+          }
+          const langData = newTestRow[lang];
+          if (langData.status !== 'mixed' && value.status !== langData.status) {
+            langData.status = 'mixed';
+          }
+          if (value.is_kst !== langData.is_kst) {
+            langData.is_kst = false;
+          }
+        });
+        return newTestRow;
+      });
+    },
+    groupedGridMeta: function () {
+      if (!this.groupByLang) {
+        return this.gridMeta;
+      }
+      const newGridMeta = {};
+      Object.entries(this.gridMeta).forEach(([pair, meta]) => {
+        const lang = pair.split('/')[0];
+        if (!Object.prototype.hasOwnProperty.call(newGridMeta, lang)) {
+          newGridMeta[lang] = {
+            lang: meta.lang,
+            timestamp: meta.timestamp,
+            ci: {},
+            kst: 0,
+            passed: 0,
+          };
+          return;
+        }
+        const langMeta = newGridMeta[lang];
+        if (meta.timestamp > langMeta.timestamp) {
+          langMeta.timestamp = meta.timestamp;
+        }
+      });
+      this.groupedGridData.forEach(testRow => {
+        Object.entries(testRow).forEach(([key, value]) => {
+          if (key === 'name' || !Object.prototype.hasOwnProperty.call(newGridMeta, key)) return;
+          if (value.status === 'passed')
+            newGridMeta[key].passed++;
+          if (value.is_kst)
+            newGridMeta[key].kst++;
+        });
+      });
+      return newGridMeta;
+    },
   },
   methods: {
     addOneJson: function (lang, version, allPairs) {

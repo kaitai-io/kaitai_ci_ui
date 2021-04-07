@@ -2,13 +2,16 @@
   <td v-bind:class="cssClassObject" @click="details = !details">
     {{ data.status || "unknown" }}
     <div class="add-info" v-if="details && data.failure">
-      <div v-if="data.failure.message">
-        Message:
-        <pre>{{ data.failure.message }}</pre>
-      </div>
-      <div v-if="data.failure.trace">
-        Stack trace:
-        <pre>{{ data.failure.trace }}</pre>
+      <div class="variant">
+        <h4><strong>{{ data.status }}</strong></h4>
+        <template v-if="data.failure.message">
+          Message:
+          <pre>{{ data.failure.message }}</pre>
+        </template>
+        <template v-if="data.failure.trace">
+          Stack trace:
+          <pre>{{ data.failure.trace }}</pre>
+        </template>
       </div>
     </div>
   </td>
