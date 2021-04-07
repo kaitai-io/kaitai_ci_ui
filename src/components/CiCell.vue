@@ -2,10 +2,14 @@
   <td v-bind:class="cssClassObject" @click="details = !details">
     {{ data.status || "unknown" }}
     <div class="add-info" v-if="details && data.failure">
-      <p>
-        Message: {{ data.failure.message }}
-      </p>
-      <pre v-if="data.failure.trace">{{ data.failure.trace }}</pre>
+      <div v-if="data.failure.message">
+        Message:
+        <pre>{{ data.failure.message }}</pre>
+      </div>
+      <div v-if="data.failure.trace">
+        Stack trace:
+        <pre>{{ data.failure.trace }}</pre>
+      </div>
     </div>
   </td>
 </template>
@@ -69,5 +73,11 @@ th.section {
   position: absolute;
   background: #F0F0F0;
   border: 1px solid #A0A0A0;
+  padding: 1.5rem;
+}
+
+.add-info > :last-child,
+.add-info > :last-child :last-child {
+  margin-bottom: 0;
 }
 </style>
