@@ -1,7 +1,7 @@
 <template>
   <td v-bind:class="cssClassObject" @click="details = !details">
     {{ data.status || "unknown" }}
-    <div class="add-info" v-if="details && hasDetails">
+    <div class="add-info" v-if="details && hasDetails" v-on:click.stop>
       <div class="variant">
         <h4><strong>{{ data.status }}</strong></h4>
         <template v-if="data.failure.message">
