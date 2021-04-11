@@ -31,15 +31,26 @@ export default {
       return !!this.data.failure;
     },
     cssClassObject: function () {
-      return {
+      const classObj = {
         "has-details": this.hasDetails,
-        "passed-kst": this.data.status === 'passed' && this.data.is_kst,
-        "passed": this.data.status === 'passed' && !this.data.is_kst,
-        "failed": this.data.status === 'failed',
-        "leak": this.data.status === 'leak',
-        "no-spec": this.data.status === undefined,
       };
-    }
+      const cssClass = this.getCssClassByStatus(this.data.status, this.data.is_kst);
+      if (cssClass) {
+        classObj[cssClass] = true;
+      }
+      return classObj;
+    },
+  },
+  methods: {
+    getCssClassByStatus: function (status, isKst) {
+      if (status === 'passed' && isKst) {
+        return 'passed-kst';
+      } else if (['passed', 'failed', 'leak'].indexOf(status) > -1) {
+        return status;
+      } else if (status === undefined) {
+        return 'no-spec';
+      }
+    },
   },
 };
 </script>
