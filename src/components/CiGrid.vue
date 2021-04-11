@@ -1,7 +1,7 @@
 <template>
-  <table class="table">
+  <table class="table table-fixed">
     <thead>
-      <tr>
+      <tr class="row-sticky-top">
         <th>Test \ Target</th>
         <th v-for="(key, i) in filteredColumns" :key="i"
             @click="sortBy(key)"
@@ -152,5 +152,26 @@ export default {
 <style scoped>
 a.ext-link {
   display: block;
+}
+.row-sticky-top th {
+  border-bottom: none;
+  padding-bottom: 10px; /* 8px + 2px */
+  background: #fff;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.row-sticky-top th:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #ddd;
+}
+.row-sticky-top + tr th {
+  border-top: none;
 }
 </style>
