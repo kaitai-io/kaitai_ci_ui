@@ -1,7 +1,7 @@
 <template>
   <td v-bind:class="cssClassObject" @click="details = !details">
     {{ data.status || "unknown" }}
-    <div class="add-info" v-if="details && data.failure">
+    <div class="add-info" v-if="details && hasDetails">
       <div class="variant">
         <h4><strong>{{ data.status }}</strong></h4>
         <template v-if="data.failure.message">
@@ -27,8 +27,12 @@ export default {
     return {"details": false};
   },
   computed: {
+    hasDetails: function () {
+      return !!this.data.failure;
+    },
     cssClassObject: function () {
       return {
+        "has-details": this.hasDetails,
         "passed-kst": this.data.status === 'passed' && this.data.is_kst,
         "passed": this.data.status === 'passed' && !this.data.is_kst,
         "failed": this.data.status === 'failed',
@@ -41,6 +45,10 @@ export default {
 </script>
 
 <style scoped>
+.has-details {
+  cursor: pointer;
+}
+
 .passed {
   background: #dff0d8;
 }
@@ -55,12 +63,10 @@ export default {
 
 .failed {
   background: #f2dede;
-  cursor: pointer;
 }
 
 .leak, .format-build-failed, .spec-build-failed {
   background: #f2cece;
-  cursor: pointer;
 }
 
 .no-run, .no-spec {
