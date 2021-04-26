@@ -138,6 +138,15 @@ th.section {
   box-shadow: rgba(238, 238, 238, 0.5) 0 0 16px 16px;
 }
 
+.add-info:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  width: 24px;
+  height: 24px;
+}
+
 .add-info .result:nth-child(even) .failure-info {
   background: #eee;
 }
