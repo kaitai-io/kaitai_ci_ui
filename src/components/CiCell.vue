@@ -102,6 +102,7 @@ th.section {
   background: #fff;
   border: 1px solid #A0A0A0;
   cursor: auto;
+  box-shadow: rgba(238, 238, 238, 0.5) 0 0 16px 16px;
 }
 
 .add-info .result:nth-child(even) .failure-info {
