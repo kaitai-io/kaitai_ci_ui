@@ -1,5 +1,5 @@
 <template>
-  <td v-bind:class="cssClassObject" @click="details = !details">
+  <td v-bind:class="cssClassObject" v-bind:style="mixedBgGradientStyle" @click="details = !details">
     {{ data.status || "unknown" }}
     <div class="add-info" v-if="details && hasDetails" v-on:click.stop>
       <div class="result" v-for="(res, i) in results" :key="i">
@@ -23,6 +23,15 @@
 </template>
 
 <script>
+const COLOR_BY_CLASS = Object.freeze({
+  'passed': '#dff0d8',
+  'passed-kst': '#82dc75',
+  'skipped': '#b9cfbb',
+  'failed': '#f2dede',
+  'leak': '#f2cece',
+  'no-spec': '#f2bebe',
+});
+
 export default {
   name: 'CiCell',
   props: {
@@ -37,6 +46,25 @@ export default {
     },
     hasDetails: function () {
       return !!this.data.failure || this.data.status === 'mixed';
+    },
+    mixedBgGradientStyle: function () {
+      if (this.data.status !== 'mixed') {
+        return {};
+      }
+      const GRADIENT_SPACING = 10;
+      const gradientStops = Array.from(
+          this.data.agg_status_set,
+          (status, idx) => {
+            const color = this.getStatusColorByCssClass(this.getCssClassByStatus(status, this.data.is_kst));
+            return [
+                color + ' ' + (idx * GRADIENT_SPACING).toFixed(0) + 'px',
+                color + ' ' + ((idx + 1) * GRADIENT_SPACING).toFixed(0) + 'px',
+            ];
+          }
+      ).flat();
+      return {
+        backgroundImage: 'repeating-linear-gradient(135deg, ' + gradientStops.join(', ') + ')',
+      };
     },
     cssClassObject: function () {
       const classObj = {
@@ -58,6 +86,11 @@ export default {
       } else if (status === undefined) {
         return 'no-spec';
       }
+    },
+    getStatusColorByCssClass: function (cssClass) {
+      return Object.prototype.hasOwnProperty.call(COLOR_BY_CLASS, cssClass) ?
+          COLOR_BY_CLASS[cssClass] :
+          'transparent';
     },
   },
 };
