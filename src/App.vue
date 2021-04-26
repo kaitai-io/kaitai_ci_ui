@@ -132,13 +132,21 @@ export default {
             newTestRow[key] = value;
             return;
           }
-          const lang = key.split('/')[0];
+          const pair = key.split('/', 2);
+          if (pair.length < 2) {
+            console.error('target key "' + key + '" is invalid (does not have the format "{lang}/{variant}")');
+          }
+          const lang = pair[0];
+          const variant = pair[1];
+
           if (!Object.prototype.hasOwnProperty.call(newTestRow, lang)) {
             newTestRow[lang] = {
               status: value.status,
               is_kst: value.is_kst,
+              failure: false,
+              agg_status_set: new Set(),
+              agg_results: [],
             };
-            return;
           }
           const langData = newTestRow[lang];
           if (langData.status !== 'mixed' && value.status !== langData.status) {
@@ -147,6 +155,37 @@ export default {
           if (value.is_kst !== langData.is_kst) {
             langData.is_kst = false;
           }
+          if (value.failure && !langData.failure) {
+            langData.failure = true;
+          }
+          const mergeTo = langData.agg_results.find(res => {
+            if (res.status !== value.status) {
+              return false;
+            }
+            if (!res.failure && !value.failure) {
+              return true;
+            }
+            if (res.failure && value.failure) {
+              return (
+                  res.failure.message === value.failure.message &&
+                  res.failure.trace === value.failure.trace
+              );
+            }
+            return false;
+          });
+          if (mergeTo) {
+            mergeTo.variant_names.push(variant);
+          } else {
+            const res = {
+              status: value.status,
+              variant_names: [variant],
+            };
+            if (value.failure) {
+              res.failure = value.failure;
+            }
+            langData.agg_results.push(res);
+          }
+          langData.agg_status_set.add(value.status);
         });
         return newTestRow;
       });

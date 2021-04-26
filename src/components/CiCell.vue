@@ -2,16 +2,21 @@
   <td v-bind:class="cssClassObject" @click="details = !details">
     {{ data.status || "unknown" }}
     <div class="add-info" v-if="details && hasDetails" v-on:click.stop>
-      <div class="variant">
-        <h4><strong>{{ data.status }}</strong></h4>
-        <template v-if="data.failure.message">
-          Message:
-          <pre>{{ data.failure.message }}</pre>
-        </template>
-        <template v-if="data.failure.trace">
-          Stack trace:
-          <pre>{{ data.failure.trace }}</pre>
-        </template>
+      <div class="result" v-for="(res, i) in results" :key="i">
+        <h4 v-bind:class="[getCssClassByStatus(res.status, data.is_kst)]">
+          <span v-if="res.variant_names">{{ res.variant_names.join(', ') }}: </span>
+          <strong>{{ res.status }}</strong>
+        </h4>
+        <div class="failure-info" v-if="res.failure">
+          <template v-if="res.failure.message">
+            Message:
+            <pre>{{ res.failure.message }}</pre>
+          </template>
+          <template v-if="res.failure.trace">
+            Stack trace:
+            <pre>{{ res.failure.trace }}</pre>
+          </template>
+        </div>
       </div>
     </div>
   </td>
@@ -27,8 +32,11 @@ export default {
     return {"details": false};
   },
   computed: {
+    results: function () {
+      return this.data.agg_results || [this.data];
+    },
     hasDetails: function () {
-      return !!this.data.failure;
+      return !!this.data.failure || this.data.status === 'mixed';
     },
     cssClassObject: function () {
       const classObj = {
@@ -91,13 +99,25 @@ th.section {
 
 .add-info {
   position: absolute;
-  background: #F0F0F0;
+  background: #fff;
   border: 1px solid #A0A0A0;
+  cursor: auto;
+}
+
+.add-info .result:nth-child(even) .failure-info {
+  background: #eee;
+}
+
+.add-info .result h4,
+.add-info .result .failure-info {
   padding: 1.5rem;
 }
 
-.add-info > :last-child,
-.add-info > :last-child :last-child {
+.add-info .result h4 {
+  margin: 0;
+}
+
+.add-info .result .failure-info > :last-child {
   margin-bottom: 0;
 }
 </style>
