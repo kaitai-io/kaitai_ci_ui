@@ -147,6 +147,11 @@ th.section {
   height: 24px;
 }
 
+.add-info pre {
+  max-height: 48ex;
+  overflow: auto;
+}
+
 .add-info .result:nth-child(even) .failure-info {
   background: #eee;
 }
