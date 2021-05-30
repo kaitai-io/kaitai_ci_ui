@@ -259,22 +259,8 @@ export default {
         // Generate output
         this.gridColumns.push(pair);
         this.gridColumns = this.gridColumns.sort((a, b) => {
-          const aParts = a.split("/");
-          const bParts = b.split("/");
-          let aIdx, bIdx;
-          for (let i = 0, len = allPairs.length; i < len; i++) {
-            if (typeof aIdx === "number" && typeof bIdx === "number") {
-              break;
-            }
-            let pair = allPairs[i];
-            if (pair[0] === aParts[0] && pair[1] === aParts[1]) {
-              aIdx = i;
-            }
-            if (pair[0] === bParts[0] && pair[1] === bParts[1]) {
-              bIdx = i;
-            }
-          }
-          return aIdx - bIdx;
+          const findPairIdx = (val) => allPairs.findIndex(pair => pair.join('/') === val);
+          return findPairIdx(a) - findPairIdx(b);
         });
         this.gridData = [];
         for (const testName in this.testData) {
