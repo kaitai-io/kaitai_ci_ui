@@ -55,6 +55,44 @@
 <script>
 import CiGrid from './components/CiGrid.vue';
 
+const TARGET_PAIRS = [
+  ["cpp_stl_98", "gcc4.8_linux"],
+  ["cpp_stl_98", "clang3.5_linux"],
+  ["cpp_stl_98", "clang7.3_osx"],
+  ["cpp_stl_98", "msvc141_windows_x64"],
+  ["cpp_stl_11", "gcc4.8_linux"],
+  ["cpp_stl_11", "clang3.5_linux"],
+  ["cpp_stl_11", "clang7.3_osx"],
+  ["cpp_stl_11", "msvc141_windows_x64"],
+  ["csharp", "mono5.18.0"],
+  ["csharp", "net45_windows"],
+  ["csharp", "netcore2.2.103_linux"],
+  ["csharp", "netcore3.0.100_linux"],
+  ["graphviz", "2.36"],
+  ["go", "1.13"],
+  ["java", "openjdk7"],
+  ["java", "oraclejdk8"],
+  ["java", "openjdk11"],
+  ["javascript", "nodejs4"],
+  ["javascript", "nodejs8"],
+  ["javascript", "nodejs10"],
+  ["javascript", "nodejs12"],
+  ["lua", "5.3"],
+  ["nim", "1.2.0"],
+  ["perl", "5.24"],
+  ["php", "7.1"],
+  ["python", "2.7"],
+  ["python", "3.4"],
+  ["python", "3.9"],
+  ["construct", "python2.7"],
+  ["construct", "python3.4"],
+  ["construct", "python3.9"],
+  ["ruby", "1.9"],
+  ["ruby", "2.3"],
+];
+TARGET_PAIRS.forEach(pair => Object.freeze(pair));
+Object.freeze(TARGET_PAIRS);
+
 export default {
   name: 'app',
   components: {
@@ -73,42 +111,8 @@ export default {
     };
   },
   created: function () {
-    var pairs = [
-      ["cpp_stl_98", "gcc4.8_linux"],
-      ["cpp_stl_98", "clang3.5_linux"],
-      ["cpp_stl_98", "clang7.3_osx"],
-      ["cpp_stl_98", "msvc141_windows_x64"],
-      ["cpp_stl_11", "gcc4.8_linux"],
-      ["cpp_stl_11", "clang3.5_linux"],
-      ["cpp_stl_11", "clang7.3_osx"],
-      ["cpp_stl_11", "msvc141_windows_x64"],
-      ["csharp", "mono5.18.0"],
-      ["csharp", "net45_windows"],
-      ["csharp", "netcore2.2.103_linux"],
-      ["csharp", "netcore3.0.100_linux"],
-      ["graphviz", "2.36"],
-      ["go", "1.13"],
-      ["java", "openjdk7"],
-      ["java", "oraclejdk8"],
-      ["java", "openjdk11"],
-      ["javascript", "nodejs4"],
-      ["javascript", "nodejs8"],
-      ["javascript", "nodejs10"],
-      ["javascript", "nodejs12"],
-      ["lua", "5.3"],
-      ["nim", "1.2.0"],
-      ["perl", "5.24"],
-      ["php", "7.1"],
-      ["python", "2.7"],
-      ["python", "3.4"],
-      ["python", "3.9"],
-      ["construct", "python2.7"],
-      ["construct", "python3.4"],
-      ["construct", "python3.9"],
-      ["ruby", "1.9"],
-      ["ruby", "2.3"],
-    ];
-    pairs.forEach(pair => this.addOneJson(pair[0], pair[1], pairs));
+    const pairCmpFunc = this.getPairCompareFunc(TARGET_PAIRS);
+    TARGET_PAIRS.forEach(pair => this.addOneJson(pair[0], pair[1], pairCmpFunc));
   },
   computed: {
     groupedGridColumns: function () {
@@ -125,9 +129,12 @@ export default {
       if (!this.groupByLang) {
         return this.gridData;
       }
+      const pairCmpFunc = this.getPairCompareFunc(TARGET_PAIRS);
       return this.gridData.map(testRow => {
         const newTestRow = {};
-        Object.entries(testRow).forEach(([key, value]) => {
+        const keys = Object.keys(testRow).sort(pairCmpFunc);
+        keys.forEach((key) => {
+          const value = testRow[key];
           if (key === 'name') {
             newTestRow[key] = value;
             return;
@@ -225,7 +232,7 @@ export default {
     },
   },
   methods: {
-    addOneJson: function (lang, version, allPairs) {
+    addOneJson: function (lang, version, pairCmpFunc) {
       var pair = lang + "/" + version;
       console.log("Querying data for", pair);
       fetch(
@@ -258,10 +265,7 @@ export default {
 
         // Generate output
         this.gridColumns.push(pair);
-        this.gridColumns = this.gridColumns.sort((a, b) => {
-          const findPairIdx = (val) => allPairs.findIndex(pair => pair.join('/') === val);
-          return findPairIdx(a) - findPairIdx(b);
-        });
+        this.gridColumns = this.gridColumns.sort(pairCmpFunc);
         this.gridData = [];
         for (const testName in this.testData) {
           this.gridData.push(this.testData[testName]);
@@ -275,7 +279,13 @@ export default {
       }).catch(err => {
         console.warn("Cannot fetch data for " + pair + ". " + err);
       });
-    }
+    },
+    getPairCompareFunc: function (allPairs) {
+      return (a, b) => {
+        const findPairIdx = (val) => allPairs.findIndex(pair => pair.join('/') === val);
+        return findPairIdx(a) - findPairIdx(b);
+      };
+    },
   }
 };
 </script>
