@@ -78,7 +78,7 @@ const TARGET_PAIRS = [
   ["javascript", "nodejs10"],
   ["javascript", "nodejs12"],
   ["lua", "5.3"],
-  ["nim", "1.2.0"],
+  ["nim", "1.6.0"],
   ["perl", "5.24"],
   ["php", "7.1"],
   ["python", "2.7"],
