@@ -91,7 +91,6 @@ const TARGET_PAIRS = [
   ["construct", "python2.7"],
   ["construct", "python3.4"],
   ["construct", "python3.10"],
-  ["ruby", "1.8"],
   ["ruby", "1.9"],
   ["ruby", "2.3"],
   ["ruby", "3.0"],
