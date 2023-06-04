@@ -14,7 +14,7 @@
       <tr>
         <th>Last update</th>
         <th v-for="(key, i) in filteredColumns" :key="i">
-          {{ meta[key].timestamp | humanTime }}
+          {{ humanTime(meta[key].timestamp) }}
           <a class="ext-link" v-if="meta[key].ci" :href="meta[key].ci.url">Job</a>
           <a class="ext-link" :href="meta[key].artifactsUrl">Artifacts</a>
         </th>
@@ -122,10 +122,12 @@ export default {
       return r;
     },
   },
-  filters: {
-    capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
+  methods: {
+    sortBy: function (key) {
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
     },
+    strContainsCaseInsensitive: (str, lowerSearchStr) => str.toLowerCase().indexOf(lowerSearchStr) > -1,
     humanTime: function (d) {
       var sec = (new Date() - d) / 1000;
       if (sec < 60) {
@@ -137,14 +139,7 @@ export default {
       } else {
         return Math.round(sec / (24 * 60 * 60)) + "d ago";
       }
-    }
-  },
-  methods: {
-    sortBy: function (key) {
-      this.sortKey = key;
-      this.sortOrders[key] = this.sortOrders[key] * -1;
     },
-    strContainsCaseInsensitive: (str, lowerSearchStr) => str.toLowerCase().indexOf(lowerSearchStr) > -1,
   }
 };
 </script>
