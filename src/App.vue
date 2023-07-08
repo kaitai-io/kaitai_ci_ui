@@ -84,7 +84,7 @@ const TARGET_PAIRS = [
   ["perl", "5.24"],
   ["perl", "5.38"],
   ["php", "7.1"],
-  ["php", "8.0"],
+  ["php", "8.2"],
   ["python", "2.7"],
   ["python", "3.4"],
   ["python", "3.11"],
