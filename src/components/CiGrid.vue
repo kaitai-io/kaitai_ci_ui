@@ -152,7 +152,6 @@ a.ext-link {
   border-bottom: none;
   padding-bottom: 10px; /* 8px + 2px */
   background: #fff;
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
