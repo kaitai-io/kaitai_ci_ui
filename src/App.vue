@@ -56,13 +56,15 @@
 import CiGrid from './components/CiGrid.vue';
 
 const TARGET_PAIRS = [
+  ["cpp_stl_98", "clang3.4-linux-x86_64"],
+  ["cpp_stl_98", "clang11-linux-x86_64"],
   ["cpp_stl_98", "gcc4.8-linux-x86_64"],
   ["cpp_stl_98", "gcc11-linux-x86_64"],
-  ["cpp_stl_98", "clang3.5_linux"],
   ["cpp_stl_98", "clang7.3_osx"],
   ["cpp_stl_98", "msvc141-windows-x64"],
+  ["cpp_stl_11", "clang3.4-linux-x86_64"],
+  ["cpp_stl_11", "clang11-linux-x86_64"],
   ["cpp_stl_11", "gcc4.8-linux-x86_64"],
-  ["cpp_stl_11", "clang3.5_linux"],
   ["cpp_stl_11", "clang7.3_osx"],
   ["cpp_stl_11", "msvc141-windows-x64"],
   ["csharp", "mono5.18.0"],
