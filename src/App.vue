@@ -67,7 +67,6 @@ const TARGET_PAIRS = [
   ["cpp_stl_11", "gcc4.8-linux-x86_64"],
   ["cpp_stl_11", "clang14-macos-x86_64"],
   ["cpp_stl_11", "msvc141-windows-x64"],
-  ["csharp", "mono5.18.0"],
   ["csharp", "net45-windows-x64"],
   ["csharp", "netcore2.2.103-linux-x86_64"],
   ["csharp", "netcore3.0.100-linux-x86_64"],
