@@ -71,7 +71,7 @@ const TARGET_PAIRS = [
   ["csharp", "net45-windows-x64"],
   ["csharp", "netcore2.2.103-linux-x86_64"],
   ["csharp", "netcore3.0.100-linux-x86_64"],
-  ["graphviz", "2.36"],
+  ["graphviz", "8-linux-x86_64"],
   ["go", "1.19-linux-x86_64"],
   ["java", "zulu7-linux-x86_64"],
   ["java", "temurin8-linux-x86_64"],
