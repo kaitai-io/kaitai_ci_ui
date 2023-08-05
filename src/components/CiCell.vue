@@ -152,10 +152,6 @@ th.section {
   overflow: auto;
 }
 
-.add-info .result:nth-child(even) .failure-info {
-  background: #eee;
-}
-
 .add-info .result h4,
 .add-info .result .failure-info {
   padding: 1.5rem;
