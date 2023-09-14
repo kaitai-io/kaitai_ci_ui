@@ -26,9 +26,11 @@
 const COLOR_BY_CLASS = Object.freeze({
   'passed': '#dff0d8',
   'passed-kst': '#82dc75',
-  'skipped': '#b9cfbb',
+  'skipped': '#ccf0ff',
   'failed': '#f2dede',
   'leak': '#f2cece',
+  'format-build-failed': '#ffdd99',
+  'spec-build-failed': '#ffdd99',
   'no-spec': '#f2bebe',
 });
 
@@ -79,12 +81,23 @@ export default {
   },
   methods: {
     getCssClassByStatus: function (status, isKst) {
-      if (status === 'passed' && isKst) {
-        return 'passed-kst';
-      } else if (['passed', 'failed', 'leak'].indexOf(status) > -1) {
-        return status;
-      } else if (status === undefined) {
-        return 'no-spec';
+      switch (status) {
+        case 'passed':
+          if (isKst) {
+            return 'passed-kst';
+          } else {
+            return status;
+          }
+        case 'failed':
+        case 'leak':
+        case 'skipped':
+          return status;
+        case 'format_build_failed':
+          return 'format-build-failed';
+        case 'spec_build_failed':
+          return 'spec-build-failed';
+        case undefined:
+          return 'no-spec';
       }
     },
     getStatusColorByCssClass: function (cssClass) {
@@ -110,15 +123,19 @@ export default {
 }
 
 .skipped {
-  background: #b9cfbb;
+  background: #ccf0ff;
 }
 
 .failed {
   background: #f2dede;
 }
 
-.leak, .format-build-failed, .spec-build-failed {
+.leak {
   background: #f2cece;
+}
+
+.format-build-failed, .spec-build-failed {
+  background: #ffdd99;
 }
 
 .no-run, .no-spec {
