@@ -24,14 +24,14 @@
 
 <script>
 const COLOR_BY_CLASS = Object.freeze({
-  'passed': '#dff0d8',
-  'passed-kst': '#82dc75',
-  'skipped': '#ccf0ff',
-  'failed': '#f2dede',
-  'leak': '#f2cece',
-  'format-build-failed': '#ffdd99',
-  'spec-build-failed': '#ffdd99',
-  'no-spec': '#f2bebe',
+  'passed': '#aea',
+  'passed-kst': '#7d7',
+  'skipped': '#cef',
+  'failed': '#edd',
+  'leak': '#ecc',
+  'format-build-failed': '#fd9',
+  'spec-build-failed': '#fd9',
+  'no-spec': '#ebb',
 });
 
 export default {
@@ -115,31 +115,31 @@ export default {
 }
 
 .passed {
-  background: #dff0d8;
+  background: #aea;
 }
 
 .passed-kst {
-  background: #82dc75;
+  background: #7d7;
 }
 
 .skipped {
-  background: #ccf0ff;
+  background: #cef;
 }
 
 .failed {
-  background: #f2dede;
+  background: #edd;
 }
 
 .leak {
-  background: #f2cece;
+  background: #ecc;
 }
 
 .format-build-failed, .spec-build-failed {
-  background: #ffdd99;
+  background: #fd9;
 }
 
 .no-run, .no-spec {
-  background: #f2bebe;
+  background: #ebb;
 }
 
 th.section {
