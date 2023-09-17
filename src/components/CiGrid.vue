@@ -3,12 +3,8 @@
     <thead>
       <tr class="row-sticky-top">
         <th>Test \ Target</th>
-        <th v-for="(key, i) in filteredColumns" :key="i"
-            @click="sortBy(key)"
-            :class="{ active: sortKey === key }">
+        <th v-for="(key, i) in filteredColumns" :key="i">
           {{ key.replace("/", " ") }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-          </span>
         </th>
       </tr>
       <tr>
@@ -63,24 +59,12 @@ export default {
     filterColumnsKey: String,
     skipPassed: Boolean
   },
-  data: function () {
-    var sortOrders = {};
-    this.columns.forEach(function (key) {
-      sortOrders[key] = 1;
-    });
-    return {
-      sortKey: 'name',
-      sortOrders: sortOrders,
-    };
-  },
   computed: {
     filteredData: function () {
-      var sortKey = this.sortKey;
       var filterKey = this.filterKey && this.filterKey.toLowerCase();
-      var order = this.sortOrders[sortKey] || 1;
       var data = this.data;
       if (filterKey) {
-        data = data.filter(row => this.strContainsCaseInsensitive(String(row.name), filterKey));
+        data = data.filter(row => this.strContainsCaseInsensitive(row.name, filterKey));
       }
       if (this.skipPassed) {
         var columns = this.filteredColumns;
@@ -90,13 +74,11 @@ export default {
           }));
         });
       }
-      if (sortKey) {
-        data = data.slice().sort(function (a, b) {
-          a = a[sortKey];
-          b = b[sortKey];
-          return (a === b ? 0 : (a > b ? 1 : -1)) * order;
-        });
-      }
+      data = data.slice().sort(function (a, b) {
+        a = a.name;
+        b = b.name;
+        return a === b ? 0 : (a > b ? 1 : -1);
+      });
       return data;
     },
     filteredColumns: function () {
@@ -123,10 +105,6 @@ export default {
     },
   },
   methods: {
-    sortBy: function (key) {
-      this.sortKey = key;
-      this.sortOrders[key] = this.sortOrders[key] * -1;
-    },
     strContainsCaseInsensitive: (str, lowerSearchStr) => str.toLowerCase().indexOf(lowerSearchStr) > -1,
     humanTime: function (d) {
       var sec = (new Date() - d) / 1000;
