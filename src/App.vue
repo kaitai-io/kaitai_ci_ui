@@ -112,7 +112,6 @@ export default {
       filterTest: '',
       filterTarget: '',
       gridColumns: [],
-      gridData: [],
       gridMeta: {},
       skipPassed: false,
       groupByLang: true,
@@ -135,19 +134,20 @@ export default {
     },
     groupedGridData: function () {
       if (!this.groupByLang) {
-        return this.gridData;
+        return Object.entries(this.testData)
+            .map(([testName, testRow]) => ({name: testName, value: testRow}));
       }
-      const pairCmpFunc = this.getPairCompareFunc(TARGET_PAIRS);
-      return this.gridData.map(testRow => {
+      const rows = [];
+      for (const testName in this.testData) {
+        const testRow = this.testData[testName];
         const newTestRow = {};
-        const keys = Object.keys(testRow).sort(pairCmpFunc);
-        keys.forEach((key) => {
-          const value = testRow[key];
-          if (key === 'name') {
-            newTestRow[key] = value;
-            return;
+        rows.push({name: testName, value: newTestRow});
+        this.gridColumns.forEach(key => {
+          let value = testRow[key];
+          if (!value) {
+            value = {status: 'unknown'};
           }
-          const pair = key.split('/', 2);
+          const pair = key.split('/');
           if (pair.length < 2) {
             console.error('target key "' + key + '" is invalid (does not have the format "{lang}/{variant}")');
           }
@@ -157,23 +157,22 @@ export default {
           if (!Object.prototype.hasOwnProperty.call(newTestRow, lang)) {
             newTestRow[lang] = {
               status: value.status,
-              is_kst: value.is_kst,
+              is_kst: true,
               failure: false,
-              agg_status_set: new Set(),
               agg_results: [],
             };
           }
           const langData = newTestRow[lang];
-          if (langData.status !== 'mixed' && value.status !== langData.status) {
+          if (value.status !== langData.status) {
             langData.status = 'mixed';
           }
-          if (value.is_kst !== langData.is_kst) {
+          if (value.status !== 'unknown' && !value.is_kst) {
             langData.is_kst = false;
           }
-          if (value.failure && !langData.failure) {
+          if (value.failure) {
             langData.failure = true;
           }
-          const mergeTo = langData.agg_results.find(res => {
+          let mergeTo = langData.agg_results.find(res => {
             if (res.status !== value.status) {
               return false;
             }
@@ -188,22 +187,20 @@ export default {
             }
             return false;
           });
-          if (mergeTo) {
-            mergeTo.variant_names.push(variant);
-          } else {
-            const res = {
+          if (!mergeTo) {
+            mergeTo = {
               status: value.status,
-              variant_names: [variant],
+              variant_names: [],
             };
             if (value.failure) {
-              res.failure = value.failure;
+              mergeTo.failure = value.failure;
             }
-            langData.agg_results.push(res);
+            langData.agg_results.push(mergeTo);
           }
-          langData.agg_status_set.add(value.status);
+          mergeTo.variant_names.push(variant);
         });
-        return newTestRow;
-      });
+      }
+      return rows;
     },
     groupedGridMeta: function () {
       if (!this.groupByLang) {
@@ -228,8 +225,8 @@ export default {
         }
       });
       this.groupedGridData.forEach(testRow => {
-        Object.entries(testRow).forEach(([key, value]) => {
-          if (key === 'name' || !Object.prototype.hasOwnProperty.call(newGridMeta, key)) return;
+        Object.entries(testRow.value).forEach(([key, value]) => {
+          if (!Object.prototype.hasOwnProperty.call(newGridMeta, key)) return;
           if (value.status === 'passed')
             newGridMeta[key].passed++;
           if (value.is_kst)
@@ -260,7 +257,7 @@ export default {
         var numKst = 0;
         for (const testName in json) {
           if (!Object.prototype.hasOwnProperty.call(this.testData, testName)) {
-            this.testData[testName] = {"name": testName};
+            this.testData[testName] = {};
           }
           var row = this.testData[testName];
           delete json[testName]["name"];
@@ -274,10 +271,6 @@ export default {
         // Generate output
         this.gridColumns.push(pair);
         this.gridColumns = this.gridColumns.sort(pairCmpFunc);
-        this.gridData = [];
-        for (const testName in this.testData) {
-          this.gridData.push(this.testData[testName]);
-        }
 
         meta.passed = numPassed;
         meta.kst = numKst;
@@ -289,10 +282,8 @@ export default {
       });
     },
     getPairCompareFunc: function (allPairs) {
-      return (a, b) => {
-        const findPairIdx = (val) => allPairs.findIndex(pair => pair.join('/') === val);
-        return findPairIdx(a) - findPairIdx(b);
-      };
+      const findPairIdx = (val) => allPairs.findIndex(pair => pair.join('/') === val);
+      return (a, b) => findPairIdx(a) - findPairIdx(b);
     },
   }
 };

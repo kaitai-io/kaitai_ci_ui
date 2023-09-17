@@ -1,6 +1,6 @@
 <template>
   <td v-bind:class="cssClassObject" v-bind:style="mixedBgGradientStyle" @click="details = !details">
-    {{ data.status || "unknown" }}
+    {{ data.status || 'unknown' }}
     <div class="add-info" v-if="details && hasDetails" v-on:click.stop>
       <div class="result" v-for="(res, i) in results" :key="i">
         <h4 v-bind:class="[getCssClassByStatus(res.status, data.is_kst)]">
@@ -55,7 +55,7 @@ export default {
       }
       const GRADIENT_SPACING = 10;
       const gradientStops = Array.from(
-          this.data.agg_status_set,
+          new Set(this.data.agg_results.map(testRow => testRow.status)),
           (status, idx) => {
             const color = this.getStatusColorByCssClass(this.getCssClassByStatus(status, this.data.is_kst));
             return [
@@ -96,6 +96,7 @@ export default {
           return 'format-build-failed';
         case 'spec_build_failed':
           return 'spec-build-failed';
+        case 'unknown':
         case undefined:
           return 'no-spec';
       }

@@ -28,7 +28,7 @@
         <ci-cell
             v-for="key in filteredColumns"
             :key="entry.name + '/' + key"
-            :data="entry[key] || {}">
+            :data="entry.value[key] || {}">
         </ci-cell>
       </tr>
     </tbody>
@@ -70,7 +70,7 @@ export default {
         var columns = this.filteredColumns;
         data = data.filter(function (row) {
           return !(columns.every(function (key) {
-            return key === 'name' || (row[key] && row[key].status === 'passed');
+            return row.value[key] && row.value[key].status === 'passed';
           }));
         });
       }
