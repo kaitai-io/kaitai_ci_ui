@@ -145,7 +145,10 @@ export default {
         this.gridColumns.forEach(key => {
           let value = testRow[key];
           if (!value) {
-            value = {status: 'unknown'};
+            value = {};
+          }
+          if (!value.status) {
+            value.status = 'unknown';
           }
           const pair = key.split('/');
           if (pair.length < 2) {
