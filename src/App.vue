@@ -72,12 +72,13 @@ const TARGET_PAIRS = [
   ["csharp", "netcore2.2.103-linux-x86_64"],
   ["csharp", "netcore3.0.100-linux-x86_64"],
   ["csharp", "netcore6.0-linux-x86_64"],
-  ["graphviz", "8-linux-x86_64"],
+  ["graphviz", "9-linux-x86_64"],
   ["go", "1.21-linux-x86_64"],
   ["java", "zulu7-linux-x86_64"],
   ["java", "temurin8-linux-x86_64"],
   ["java", "temurin11-linux-x86_64"],
   ["java", "temurin17-linux-x86_64"],
+  ["java", "temurin21-linux-x86_64"],
   ["javascript", "nodejs4-linux-x86_64"],
   ["javascript", "nodejs8-linux-x86_64"],
   ["javascript", "nodejs10-linux-x86_64"],
@@ -88,7 +89,7 @@ const TARGET_PAIRS = [
   ["perl", "5.24-linux-x86_64"],
   ["perl", "5.38-linux-x86_64"],
   ["php", "7.1-linux-x86_64"],
-  ["php", "8.2-linux-x86_64"],
+  ["php", "8.3-linux-x86_64"],
   ["python", "2.7-linux-x86_64"],
   ["python", "3.4-linux-x86_64"],
   ["python", "3.12-linux-x86_64"],
@@ -97,7 +98,7 @@ const TARGET_PAIRS = [
   ["construct", "python3.12-linux-x86_64"],
   ["ruby", "1.9-linux-x86_64"],
   ["ruby", "2.3-linux-x86_64"],
-  ["ruby", "3.2-linux-x86_64"],
+  ["ruby", "3.3-linux-x86_64"],
 ];
 TARGET_PAIRS.forEach(pair => Object.freeze(pair));
 Object.freeze(TARGET_PAIRS);
