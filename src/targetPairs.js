@@ -30,7 +30,7 @@ const TARGET_PAIRS = [
   ["lua", "5.3-linux-x86_64"],
   ["nim", "1.6.0-linux-x86_64"],
   ["perl", "5.24-linux-x86_64"],
-  ["perl", "5.38-linux-x86_64"],
+  ["perl", "5.40-linux-x86_64"],
   ["php", "7.1-linux-x86_64"],
   ["php", "8.3-linux-x86_64"],
   ["python", "2.7-linux-x86_64"],
