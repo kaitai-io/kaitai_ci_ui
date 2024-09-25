@@ -16,7 +16,7 @@ const TARGET_PAIRS = [
   ["csharp", "netcore3.0.100-linux-x86_64"],
   ["csharp", "net6.0-linux-x86_64"],
   ["graphviz", "9-linux-x86_64"],
-  ["go", "1.22-linux-x86_64"],
+  ["go", "1.23-linux-x86_64"],
   ["java", "zulu7-linux-x86_64"],
   ["java", "temurin8-linux-x86_64"],
   ["java", "temurin11-linux-x86_64"],
@@ -42,7 +42,7 @@ const TARGET_PAIRS = [
   ["ruby", "1.9-linux-x86_64"],
   ["ruby", "2.3-linux-x86_64"],
   ["ruby", "3.3-linux-x86_64"],
-  ["rust", "1.80-linux-x86_64"],
+  ["rust", "1.81-linux-x86_64"],
 ];
 TARGET_PAIRS.forEach(pair => Object.freeze(pair));
 Object.freeze(TARGET_PAIRS);
