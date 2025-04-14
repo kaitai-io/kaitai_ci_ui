@@ -1,7 +1,7 @@
 <template>
   <td v-bind:class="cssClassObject" v-bind:style="mixedBgGradientStyle" @click="details = !details">
     {{ data.status || 'unknown' }}
-    <div class="add-info" v-if="details && hasDetails" v-on:click.stop>
+    <div class="add-info position-absolute bg-white border" v-if="details && hasDetails" v-on:click.stop>
       <div class="result" v-for="(res, i) in results" :key="i">
         <h4 v-bind:class="[getCssClassByStatus(res.status, data.is_kst)]">
           <span v-if="res.variant_names">{{ res.variant_names.join(', ') }}: </span>
@@ -113,6 +113,7 @@ export default {
 <style scoped>
 .has-details {
   cursor: pointer;
+  position: relative;
 }
 
 .passed {
@@ -150,8 +151,7 @@ th.section {
 
 .add-info {
   position: absolute;
-  background: #fff;
-  border: 1px solid #A0A0A0;
+  z-index: 100;
   cursor: auto;
   box-shadow: rgba(238, 238, 238, 0.5) 0 0 16px 16px;
 }
