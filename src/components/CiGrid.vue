@@ -1,7 +1,7 @@
 <template>
-  <table class="table">
+  <table class="table table-fixed">
     <thead>
-      <tr class="sticky-top bg-white">
+      <tr class="row-sticky-top">
         <th>Test \ Target</th>
         <th v-for="(key, i) in filteredColumns" :key="i">
           {{ key.replace("/", " ") }}
@@ -126,15 +126,24 @@ export default {
 a.ext-link {
   display: block;
 }
-.sticky-top {
+.row-sticky-top th {
+  border-bottom: none;
+  padding-bottom: 10px; /* 8px + 2px */
+  background: #fff;
+  position: sticky;
   top: 0;
   z-index: 1;
 }
-.sticky-top th {
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+.row-sticky-top th:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #ddd;
 }
-.sticky-top + tr th {
+.row-sticky-top + tr th {
   border-top: none;
 }
 </style>

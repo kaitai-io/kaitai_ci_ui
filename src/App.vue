@@ -3,26 +3,22 @@
     <h1>Kaitai Struct CI</h1>
 
     <form id="search">
-      <div class="row g-3">
-        <div class="col-md-4">
+      <div class="form-row">
+        <div class="form-group col-md-4">
           <input name="filterTest" class="form-control" v-model="filterTest" placeholder="Search test...">
         </div>
-        <div class="col-md-4">
+        <div class="form-group col-md-4">
           <input name="filterTarget" class="form-control" v-model="filterTarget" placeholder="Search target...">
         </div>
         <div class="col-md-4 options-column">
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" v-model="skipPassed" id="only-failures-checkbox">
-            <label class="form-check-label" for="only-failures-checkbox">
-              Only failures
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" v-model="groupByLang" id="group-by-lang">
-            <label class="form-check-label" for="group-by-lang">
-              Group columns by language
-            </label>
-          </div>
+          <label class="checkbox-inline" for="only-failures-checkbox">
+            <input type="checkbox" v-model="skipPassed" id="only-failures-checkbox">
+            Only failures
+          </label>
+          <label class="checkbox-inline" for="group-by-lang">
+            <input type="checkbox" v-model="groupByLang" id="group-by-lang">
+            Group columns by language
+          </label>
         </div>
       </div>
     </form>
@@ -40,17 +36,17 @@
 </template>
 
 <style>
-.row > .col,
-.row > [class*="col-"] {
+.form-row > .col,
+.form-row > [class*="col-"] {
   padding-right: 5px;
   padding-left: 5px;
 }
 
-.options-column {
+.form-row .options-column {
   padding-left: 12px;
 }
 
-.form-check-inline {
+.col-md-4 label.checkbox-inline {
   padding-top: 6px;
   padding-bottom: 6px;
 }
