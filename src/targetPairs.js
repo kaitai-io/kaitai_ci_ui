@@ -28,7 +28,7 @@ const TARGET_PAIRS = [
   ["lua", "5.3-linux-x86_64"],
   ["lua", "5.4-linux-x86_64"],
   ["nim", "1.6.20-linux-x86_64"],
-  ["nim", "2.2.0-linux-x86_64"],
+  ["nim", "2.2.2-linux-x86_64"],
   ["perl", "5.30-linux-x86_64"],
   ["perl", "5.40-linux-x86_64"],
   ["php", "7.1-linux-x86_64"],
@@ -41,7 +41,7 @@ const TARGET_PAIRS = [
   ["ruby", "1.9-linux-x86_64"],
   ["ruby", "2.3-linux-x86_64"],
   ["ruby", "3.4-linux-x86_64"],
-  ["rust", "1.85-linux-x86_64"],
+  ["rust", "1.86-linux-x86_64"],
 ];
 TARGET_PAIRS.forEach(pair => Object.freeze(pair));
 Object.freeze(TARGET_PAIRS);
