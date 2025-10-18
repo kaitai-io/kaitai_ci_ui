@@ -42,6 +42,7 @@ const TARGET_PAIRS = [
   ["ruby", "2.3-linux-x86_64"],
   ["ruby", "3.4-linux-x86_64"],
   ["rust", "1.89-linux-x86_64"],
+  ["zig", "0.15.2-linux-x86_64"],
 ];
 TARGET_PAIRS.forEach(pair => Object.freeze(pair));
 Object.freeze(TARGET_PAIRS);
