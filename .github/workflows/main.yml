@@ -19,6 +19,7 @@ jobs:
           submodules: true
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
+          package-manager-cache: false # GitHub Actions cache may be poisoned, see https://docs.zizmor.sh/audits/#cache-poisoning
           node-version: '20'
       - run: npm ci
       - run: npm run build
