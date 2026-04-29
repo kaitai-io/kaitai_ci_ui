@@ -26,8 +26,9 @@ const TARGET_PAIRS = [
   ["javascript", "nodejs24-linux-x86_64"],
   ["lua", "5.3-linux-x86_64"],
   ["lua", "5.4-linux-x86_64"],
+  ["lua", "5.5-linux-x86_64"],
   ["nim", "1.6.20-linux-x86_64"],
-  ["nim", "2.2.8-linux-x86_64"],
+  ["nim", "2.2.10-linux-x86_64"],
   ["perl", "5.30-linux-x86_64"],
   ["perl", "5.42-linux-x86_64"],
   ["php", "7.1-linux-x86_64"],
@@ -38,7 +39,7 @@ const TARGET_PAIRS = [
   ["construct", "python3.14-linux-x86_64"],
   ["ruby", "2.4-linux-x86_64"],
   ["ruby", "4.0-linux-x86_64"],
-  ["rust", "1.94-linux-x86_64"],
+  ["rust", "1.95-linux-x86_64"],
   ["zig", "0.15.2-linux-x86_64"],
 ];
 TARGET_PAIRS.forEach(pair => Object.freeze(pair));
